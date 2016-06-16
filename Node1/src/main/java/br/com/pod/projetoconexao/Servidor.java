@@ -37,10 +37,7 @@ public class Servidor {
     }
      
     
-     public Mensagem exibeMensagem() throws IOException
-     {
-        return montaMensagem(_socket);
-     }
+     
      
      public void retornaMensagem(String mensagem) throws IOException
      {
@@ -54,14 +51,21 @@ public class Servidor {
         return new String(b).trim();
      }
      
-    private Mensagem montaMensagem(Socket socket) throws IOException {
-        Mensagem retorno = new Mensagem();
+    public Person getPerson() throws IOException{
+     
+        return montaMensagem(_socket);
+    }
+    
+    
+    
+    private Person montaMensagem(Socket socket) throws IOException {
+        Person retorno = new Person();
         //mensagem = new Mensagem());
         Scanner s = new Scanner(socket.getInputStream()).useDelimiter("\\|");
        while (s.hasNext()) {            
-            retorno.setTexto(s.next());
-            retorno.setTamanho(s.next());
+            retorno.setId((Integer.parseInt(s.next())));
             retorno.setNome(s.next());
+            retorno.setPhone(s.next());
         }
        return retorno;
     }

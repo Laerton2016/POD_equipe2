@@ -17,8 +17,11 @@ public class Main {
     
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
         
-        Cliente node1 = new Cliente("x.x.x.x", 1097);
-        Cliente node3 = new Cliente("x.x.x.x", 1099);
+        //Enviando dados de persoa 
+        Person pessoa = new Person(1, "Joe", "35222786");
+        Cliente node1 = new Cliente("10.3.188.193", 1099);
+        node1.enviaMensagem(pessoa.toString());
+        //Cliente node3 = new Cliente("x.x.x.x", 1099);
     }
     
 }

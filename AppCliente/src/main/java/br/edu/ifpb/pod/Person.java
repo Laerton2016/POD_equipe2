@@ -11,11 +11,20 @@ package br.edu.ifpb.pod;
  */
 public class Person {
     private int _id;
-    private String _nome;
+    private String _nome, _phone;
 
-    public Person(int _id, String _nome) {
+    public String getPhone() {
+        return _phone;
+    }
+
+    public void setPhone(String _phone) {
+        this._phone = _phone;
+    }
+
+    public Person(int _id, String _nome, String _phone) {
         this._id = _id;
         this._nome = _nome;
+        this._phone = _phone;
     }
     
     public int getId() {
@@ -34,4 +43,9 @@ public class Person {
         this._nome = _nome;
     }
     
+    
+    @Override
+    public String toString(){
+        return  _id + "|"+ _nome + "|"  + _phone;
+    }
 }
