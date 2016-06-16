@@ -19,7 +19,7 @@ public class Main {
         
         //Enviando dados de persoa 
         Person pessoa = new Person(1, "Joe", "35222786");
-        Cliente node1 = new Cliente("10.3.188.193", 1099);
+        Cliente node1 = new Cliente("localhost", 1099);
         node1.enviaMensagem(pessoa.toString());
         //Cliente node3 = new Cliente("x.x.x.x", 1099);
     }

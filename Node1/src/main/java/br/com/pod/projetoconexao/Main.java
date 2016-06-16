@@ -20,9 +20,8 @@ public class Main {
         Person pessoa = server.getPerson();
         DAOPessoa dao = new DAOPessoa();
         dao.Add(pessoa);
-        
-        //Cliente client = new Cliente("x.x.x.x", 1097);
-        //client.enviaMensagem(pessoa.getId() +"|" + pessoa.getPhone());
+        Cliente client = new Cliente("localhost", 1097);
+        client.enviaMensagem(pessoa.getId() +"|" + pessoa.getPhone());
     }
     
 }
