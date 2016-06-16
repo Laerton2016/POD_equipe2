@@ -10,9 +10,18 @@ package br.edu.ifpb.pod;
  * @author laerton
  */
 public class Order {
-    private int _id, _salesmanis, _productid, _quantity;
 
-    public Order(int _id, int _salesmanis, int _productid, int _quantity) {
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String _id) {
+        this._id = _id;
+    }
+    private int  _salesmanis, _productid, _quantity;
+    private String _id;
+
+    public Order(String _id, int _salesmanis, int _productid, int _quantity) {
         this._id = _id;
         this._salesmanis = _salesmanis;
         this._productid = _productid;
@@ -20,14 +29,7 @@ public class Order {
     }
 
     
-    public int getId() {
-        return _id;
-    }
-
-    public void setId(int _id) {
-        this._id = _id;
-    }
-
+   
     public int getSalesmanis() {
         return _salesmanis;
     }
@@ -51,4 +53,10 @@ public class Order {
     public void setQuantity(int _quantity) {
         this._quantity = _quantity;
     }
+    
+    @Override
+    public String toString(){
+        return _id + "|" + _productid + "|" + _quantity + "|" + _salesmanis ;
+    }
+    
 }
