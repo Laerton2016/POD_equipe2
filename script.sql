@@ -12,18 +12,16 @@ CREATE TABLE Product (
 );
 
 
-CREATE TABLE Salesman (
+CREATE TABLE Salesman(
  personid int NOT NULL UNIQUE,
  phone character varying(50) NOT NULL,
 PRIMARY KEY (personid)
- 
 );
 
 
-CREATE TABLE Order1 (
+CREATE TABLE order1(
  id character varying(20) NOT NULL UNIQUE,
  salesmanid int NOT NULL,
 productid int  NOT NULL,
 quantity int  NOT NULL,
- PRIMARY KEY (id)
-);
+ PRIMARY KEY (id));
