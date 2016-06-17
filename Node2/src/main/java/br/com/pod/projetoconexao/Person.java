@@ -28,7 +28,7 @@ public class Person {
     }
 
     public Person() {
-        
+     _id = 0;   
     }
     
     public int getId() {

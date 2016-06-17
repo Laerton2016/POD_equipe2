@@ -10,6 +10,9 @@ import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.ServerSocket;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -68,17 +71,35 @@ public class Servidor {
     private void montaMensagem(Socket socket) throws IOException {
         
         Scanner s = new Scanner(socket.getInputStream()).useDelimiter("\\|");
-
+        List<String> dados = new ArrayList<String>();
+        
         while (s.hasNext()) {
-            order.setId(s.next());
-            order.setProductid(s.nextInt());
-            order.setQuantity(s.nextInt());
-            order.setSalesmanis(s.nextInt());
-
-            person.setId(s.nextInt());
-            person.setNome(s.next());
-            person.setPhone(s.next());
+            dados.add(s.next());
         }
+      
+        order.setId(dados.get(0));
+        order.setProductid(Integer.parseInt(dados.get(1)));
+        order.setQuantity(Integer.parseInt(dados.get(2)));
+        order.setSalesmanis(Integer.parseInt(dados.get(3)));
+        if (dados.size()== 7){
+            person.setId(Integer.parseInt(dados.get(4)) );
+            person.setNome(dados.get(5));
+            person.setPhone(dados.get(6));
+        }
+        
+    }
 
+    void processaMensagem() throws ClassNotFoundException, SQLException, IOException {
+       montaMensagem(_socket);
+       DAOOrder dao = new DAOOrder();
+       dao.Add(order);
+    }
+
+    void encaminhaMensagem(Cliente client) throws IOException {
+       if (person.getId() != 0){
+           client.enviaMensagem(person.getId() + "|" + person.getNome()+ '|' + person.getPhone());
+       }else{
+           System.err.println("Não existem mensagem a encaminhar para node 2");
+       }
     }
 }

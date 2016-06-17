@@ -28,7 +28,7 @@ public class Person {
     }
 
     public Person() {
-        
+        this._id = 0;
     }
     
     public int getId() {

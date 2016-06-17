@@ -16,24 +16,26 @@ import java.util.logging.Logger;
  *
  * @author laerton
  */
-public class DAOPessoa implements IDAO<Person>{
+public class DAOOrder implements IDAO<Order>{
     private Connection conex;
     
-    public DAOPessoa() throws ClassNotFoundException, SQLException{
+    public DAOOrder() throws ClassNotFoundException, SQLException{
         conex = new Regras().getConnection();
     }
     
     @Override
-    public void Add(Person tipo) {
+    public void Add(Order tipo) {
         
      try {
             Statement s = (Statement) conex.createStatement();
-            s.execute("insert into person (id, name) values ("+ tipo.getId() + ",'" + tipo.getNome() + "');");
+            s.execute("insert into order1 (id, salesmanid, productid, quantity) values ('"+
+                    tipo.getId() + "'," + tipo.getSalesmanis() + "," + tipo.getProductid() +
+                    "," + tipo.getQuantity() + ");");
             
             s.close();
             
         } catch (SQLException ex) {
-            Logger.getLogger(DAOPessoa.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

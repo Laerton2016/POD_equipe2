@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.ServerSocket;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -22,8 +23,10 @@ public class Servidor {
     private Socket _socket;
     private InputStream _input;
     private Mensagem mensagem;
+    private Person _person;
     
     public Servidor(int porta) throws IOException{
+        _person = new Person();
         _serverSocket = new ServerSocket();
         this._porta = new InetSocketAddress(porta);
         _serverSocket.bind(_porta);
@@ -53,7 +56,7 @@ public class Servidor {
      
     public Person getPerson() throws IOException{
      
-        return montaMensagem(_socket);
+        return _person;
     }
     
     
@@ -68,5 +71,15 @@ public class Servidor {
             retorno.setPhone(s.next());
         }
        return retorno;
+    }
+
+    void processaMensagem() throws ClassNotFoundException, SQLException, IOException {
+        _person = montaMensagem(_socket);
+        DAOPessoa dao = new DAOPessoa();
+        dao.Add(_person);
+    }
+
+    void encaminhaMensagem(Cliente client) throws IOException {
+        client.enviaMensagem(_person.getId() +"|" + _person.getPhone());
     }
 }

@@ -12,7 +12,7 @@ public class Regras {
     
     private Connect conex;
     private static final String user = "postgres";
-    private static final String senha = "123";
+    private static final String senha = "postgres";
     private static final String url = "jdbc:postgresql://localhost:5432/db_node_3"; 
     
     public Regras() throws ClassNotFoundException, SQLException

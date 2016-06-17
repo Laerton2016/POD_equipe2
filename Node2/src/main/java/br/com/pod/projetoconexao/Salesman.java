@@ -20,6 +20,7 @@ public class Salesman {
     }
 
     public Salesman() {
+            _personid =0;
     }
 
     public int getPersonid() {

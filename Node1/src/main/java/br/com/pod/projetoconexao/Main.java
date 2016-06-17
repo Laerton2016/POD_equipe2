@@ -16,12 +16,22 @@ public class Main {
     private static Regras regras;
     
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
-        Servidor server = new Servidor(1099);
+        /*Servidor server = new Servidor(1099);
         Person pessoa = server.getPerson();
-        DAOPessoa dao = new DAOPessoa();
-        dao.Add(pessoa);
-        Cliente client = new Cliente("localhost", 1097);
-        client.enviaMensagem(pessoa.getId() +"|" + pessoa.getPhone());
+        
+        */
+        Servidor server = new Servidor(1099);
+         //processa a mensagem e registra os dados no banco
+        server.processaMensagem();
+        try {
+            Cliente client = new Cliente("localhost", 1097);
+            //Verifica se a mensagem tem dados para encaminhar para node 1 e encaminha
+            server.encaminhaMensagem(client);
+        } catch (Exception e) 
+        {
+            System.err.println(e.getMessage()); 
+        }
+        
     }
     
 }

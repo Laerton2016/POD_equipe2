@@ -10,6 +10,9 @@ import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -23,8 +26,12 @@ public class Servidor {
     private Socket _socket;
     private InputStream _input;
     private Mensagem mensagem;
+    private Salesman _salesman;
+    private Person _person;
     
     public Servidor(int porta) throws IOException{
+        _salesman = new Salesman();
+        _person = new Person();
         _serverSocket = new ServerSocket();
         this._porta = new InetSocketAddress(porta);
         _serverSocket.bind(_porta);
@@ -53,20 +60,52 @@ public class Servidor {
      }
      
     public Salesman getSalesman() throws IOException{
-     
-        return montaMensagem(_socket);
+        return _salesman;
     }
     
     
     
-    private Salesman montaMensagem(Socket socket) throws IOException {
-        Salesman retorno = new Salesman();
-        //mensagem = new Mensagem());
-        Scanner s = new Scanner(socket.getInputStream()).useDelimiter("\\|");
-       while (s.hasNext()) {            
-            retorno.setPersonid((Integer.parseInt(s.next())));
-            retorno.setPhone(s.next());
+    private void montaMensagem(Socket socket) throws IOException {
+       Scanner s = new Scanner(socket.getInputStream()).useDelimiter("\\|");
+       List<String> dados = new ArrayList<String>();
+
+        while (s.hasNext()) {
+            dados.add(s.next());
         }
-       return retorno;
+        if (dados.size() > 0)
+        {
+            if (dados.size() == 2){
+            _salesman.setPersonid(Integer.parseInt(dados.get(0)));
+            _salesman.setPhone(dados.get(1));
+            
+        }else
+        {
+            _person.setId(Integer.parseInt(dados.get(0)));
+            _person.setNome(dados.get(1));
+            _person.setPhone(dados.get(2));
+            _salesman.setPersonid(Integer.parseInt(dados.get(0)));
+            _salesman.setPhone(dados.get(2));
+        }
+        }
+        
+        
+        
+    }
+
+    void processaMensagem() throws ClassNotFoundException, SQLException, IOException {
+        montaMensagem(_socket);
+        if (_salesman.getPersonid() !=0){
+            DAOSalesman dao = new DAOSalesman();
+            dao.Add(_salesman);
+        }
+        
+    }
+
+    void encaminhaMensagem(Cliente client) throws IOException {
+        if (_person.getId()!=0){
+            client.enviaMensagem(_person.getId() +
+                "|" + _person.getNome()+"|" + _person.getPhone());
+        }
+        
     }
 }

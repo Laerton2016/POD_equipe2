@@ -7,6 +7,8 @@ package br.com.pod.projetoconexao;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,15 +16,27 @@ import java.sql.SQLException;
  */
 public class Main {
     private static Regras regras;
-    
-    public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
-        Servidor server = new Servidor(1097);
-        Salesman salesman = server.getSalesman();
-        DAOSalesman dao = new DAOSalesman();
-        dao.Add(salesman);
-        
-        //Cliente client = new Cliente("x.x.x.x", 1097);
-        //client.enviaMensagem(pessoa.getId() +"|" + pessoa.getPhone());
+    private static Cliente _client;
+    private static Servidor _server;
+    public Main(Cliente cliente){
+        this._client = cliente;
     }
+    public static void main(String[] args) 
+            throws ClassNotFoundException, SQLException, IOException {
+        _server = new Servidor(1097);
+         //processa a mensagem e registra os dados no banco
+        _server.processaMensagem();
+        try {
+            _client = new Cliente("localhost", 1099);
+            _server.encaminhaMensagem(_client);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        
+        
+    }
+
+    
     
 }
