@@ -1,4 +1,4 @@
-# POD_equipe2
-** 1-Aluísio Pereira;
-** 2-Laerton Marques de Figueiredo;
-** 3-Wellington Lins
+## POD_equipe2 
+- Aluísio Pereira;
+- Laerton Marques de Figueiredo;
+- Wellington Lins
